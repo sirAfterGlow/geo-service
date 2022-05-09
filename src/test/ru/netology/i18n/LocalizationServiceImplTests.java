@@ -1,7 +1,12 @@
 package ru.netology.i18n;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import ru.netology.entity.Country;
+
+import java.util.stream.Stream;
 
 public class LocalizationServiceImplTests {
 
@@ -29,15 +34,16 @@ public class LocalizationServiceImplTests {
     }
 
 
-    @Test
-    public void test_get_rus_local_for_russian() {
-        Country country = Country.RUSSIA;
-        String expected = "Добро пожаловать";
-
+    @ParameterizedTest
+    @MethodSource("source")
+    public void localTest(Country country, String expected) {
         String result = sut.locale(country);
 
         Assertions.assertEquals(expected, result);
-
+    }
+    private static Stream<Arguments> source() {
+        return Stream.of((Arguments.of(Country.RUSSIA, "Добро пожаловать")),
+            Arguments.of(Country.USA, "Welcome"));
     }
 
 

@@ -37,7 +37,7 @@ public class GeoServiceImplTests {
 
     @ParameterizedTest
     @MethodSource("source")
-    public void test_get_right_local_by_ip(String ip, Location expected) {
+    public void byIpTest(String ip, Location expected) {
         Location result = sut.byIp(ip);
 
         Assertions.assertEquals(result.getCountry(), expected.getCountry());
@@ -48,7 +48,7 @@ public class GeoServiceImplTests {
     }
 
     @Test
-    void test_exception_throw() {
+    void byCoordinatesThrowTest() {
         Assertions.assertThrows(RuntimeException.class, () -> sut.byCoordinates(123, 32.2));
     }
 }
